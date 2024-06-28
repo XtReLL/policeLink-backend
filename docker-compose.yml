@@ -1,0 +1,23 @@
+version: "3"
+services:
+  postgres-newTown:
+    container_name: postgres-newTown
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    env_file:
+      - docker.env
+    volumes:
+      - /data/postgres:/data/postgres
+    networks:
+      - postgres-newTown
+
+  redis:
+    image: redis:4.0-alpine
+    command: ['sh', '-c', 'exec redis-server']
+    ports:
+      - '6379:6379'
+
+networks:
+  postgres-newTown:
+    driver: bridge

@@ -1,0 +1,83 @@
+image: node:22.2.0-alpine3.20
+
+stages:
+  - test
+  - build
+  - deploy
+
+  variables:
+  DOCKER_REGISTRY: "cr.yandex"
+  DOCKER_REPO: $DOCKER_REGISTRY/$DEVELOP_YC_CONTAINER_REGISTRY_ID/$CI_PROJECT_NAME
+
+before_script:
+  - |
+    # docker variables for name and tag of new image
+    export DOCKER_TAG="${CI_COMMIT_SHORT_SHA}"
+    export DOCKER_IMAGE="${DOCKER_REPO}:${DOCKER_TAG}"
+    export DOCKER_IMAGE_LATEST="${DOCKER_REPO}:latest"
+
+.node_cache:
+  cache:
+    key: ${CI_PROJECT_ID}
+    paths:
+      - node_modules
+  before_script:
+    - pnpm install
+
+build:
+  stage: test
+  extends: .node_cache
+  script:
+    - pnpm build
+
+lint:
+  stage: test
+  extends: .node_cache
+  script:
+    - pnpm lint
+
+test:
+  stage: test
+  services:
+    - postgres:14.2
+    - redis:7.0.4
+  variables:
+    NODE_ENV: test-ci
+    POSTGRES_HOST: postgres
+    POSTGRES_DB: policeLink-test
+    POSTGRES_USER: policeLink-test
+    POSTGRES_PASSWORD: policeLink-test
+    REDIS_PORT: 6379
+    REDIS_HOST: redis
+    REDIS_URL: redis://redis:6379
+  extends: .node_cache
+  script:
+    - yarn test:ci
+
+docker:
+  stage: build
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - echo $YC_SA_KEY | docker login -u json_key --password-stdin $DOCKER_REGISTRY
+    - docker build --build-arg COMMIT_HASH=$CI_COMMIT_SHA -t $DOCKER_IMAGE -t $DOCKER_IMAGE_LATEST -f Dockerfile .
+    - docker push $DOCKER_IMAGE
+    - docker push $DOCKER_IMAGE_LATEST
+  only:
+    - master
+    - staging
+    - dev
+
+# deploy stage TODO
+
+deploy-package:
+  cache: []
+  stage: deploy
+  when: manual
+  script:
+    - cd $(pwd)/typings && /bin/sh deploy.bash
+  only:
+    - master
+    - staging
+    - dev

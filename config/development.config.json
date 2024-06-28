@@ -1,0 +1,17 @@
+{
+  "application": {
+    "name": "newTownDatabase-development",
+    "webHost": "newtowndatabase.dev",
+    "rateLimiter": {
+      "ttl": 30,
+      "limit": 40
+    }
+  },
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "username": "newTownDatabase",
+    "password": "newTownDatabasePassword",
+    "name": "newTownDb"
+  }
+}

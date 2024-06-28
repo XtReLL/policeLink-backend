@@ -1,0 +1,21 @@
+{
+  "application": {
+    "name": "newTownDatabase-production",
+    "webHost": "newtowndatabase.io",
+    "rateLimiter": {
+      "ttl": 10,
+      "limit": 75
+    }
+  },
+  "database": {
+    "host": "",
+    "port": 5432,
+    "username": "newTownDatabase-prod",
+    "password": "newTownDatabasePassword-prod",
+    "name": "newTownDatabase-prod"
+  },
+  "graphql": {
+    "debug": false,
+    "playground": false
+  }
+}

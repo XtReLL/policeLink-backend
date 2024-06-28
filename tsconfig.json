@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@config": [
+        "src/config"
+      ],
+      "@interfaces*": [
+        "src/common/interfaces*"
+      ],
+      "@plugins*": [
+        "src/common/plugins*"
+      ],
+      "@plugins": [
+        "src/common/plugins"
+      ],
+      "@common*": [
+        "src/common*"
+      ],
+      "@interfaces": [
+        "src/common/interfaces"
+      ],
+      "@typings/*": [
+        "./typings/src/*"
+      ],
+      "@src*": [
+        "src*"
+      ]
+    }
+  }
+}
