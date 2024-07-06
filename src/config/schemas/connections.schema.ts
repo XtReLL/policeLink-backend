@@ -15,7 +15,7 @@ export interface ConnectionsConfigSchemaInterface {
     discord: {
       host: string;
       protocol: 'http' | 'https';
-      CLIENT_REDIRECT_URI: string;
+      DISCORD_REDIRECT_URI: string;
       DISCORD_CLIENT_ID: string;
       DISCORD_CLIENT_SECRET: string;
     };
@@ -72,7 +72,7 @@ export const ConnectionsConfigSchema: Schema<ConnectionsConfigSchemaInterface> =
           default: 'https',
           env: 'CONNECTIONS_DISCORD_PROTOCOL',
         },
-        CLIENT_REDIRECT_URI: {
+        DISCORD_REDIRECT_URI: {
           doc: 'Discord client redirect uri',
           format: '*',
           default: '',

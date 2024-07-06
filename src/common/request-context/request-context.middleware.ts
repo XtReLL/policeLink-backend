@@ -13,11 +13,13 @@ export class RequestContextMiddleware
   use(req: Request, res: Response, next: () => void) {
     const { name } = this.configService.get().application;
     const requestId = uuid();
+    const serverKey = req.header('serverKey');
 
     RequestContextStorage.cls.run(
       new RequestContextStorage({
         app: name,
         requestId,
+        serverKey,
         request: req,
         response: res,
       }),

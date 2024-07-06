@@ -4,7 +4,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { ConfigModule, ConfigService } from '@config';
 import { join } from 'path';
-// import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 @Module({
   imports: [
@@ -16,10 +16,10 @@ import { join } from 'path';
 
         return {
           debug: graphql.debug,
-          playground: true,
-          // plugins: graphql.playground
-          //   ? [ApolloServerPluginLandingPageLocalDefault({ embed: false })]
-          //   : [],
+          playground: false,
+          plugins: graphql.playground
+            ? [ApolloServerPluginLandingPageLocalDefault({ embed: false })]
+            : [],
           introspection: true,
           path: graphql.endpoint,
           installSubscriptionHandlers: true,
@@ -34,9 +34,7 @@ import { join } from 'path';
             'graphql-ws': true,
             //'subscriptions-transport-ws': true,
           },
-          context: () => ({
-            // TODO: Move possible loaders into enum to use it in other part of api
-          }),
+          context: () => ({}),
         };
       },
       inject: [ConfigService],

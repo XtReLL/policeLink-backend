@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { GameServerModule } from './game-server/game-server.module';
 import { DiscordModule } from './discord/discord.module';
+import { RequestContextModule } from '@common/request-context';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { DiscordModule } from './discord/discord.module';
     AuthModule,
     GameServerModule,
     DiscordModule,
+    RequestContextModule,
   ],
   controllers: [],
   providers: [ConfigService, ...ApolloPlugins, AppResolver],

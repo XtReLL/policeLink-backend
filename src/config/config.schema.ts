@@ -26,6 +26,10 @@ import {
   SecurityConfigSchema,
   SecurityConfigSchemaInterface,
 } from './schemas/security.schema';
+import {
+  RestConfigSchemaInterface,
+  RestConfigSchema,
+} from './schemas/rest.schema';
 
 export interface ConfigSchemaInterface
   extends ApplicationConfigSchemaInterface,
@@ -33,7 +37,8 @@ export interface ConfigSchemaInterface
     DatabaseConfigSchemaInterface,
     GraphQLConfigSchemaInterface,
     ConnectionsConfigSchemaInterface,
-    SecurityConfigSchemaInterface {
+    SecurityConfigSchemaInterface,
+    RestConfigSchemaInterface {
   env: ApplicationEnvironment;
 }
 
@@ -52,4 +57,5 @@ export const ConfigSchema: Schema<ConfigSchemaInterface> = {
   ...GraphQLConfigSchema,
   ...ConnectionsConfigSchema,
   ...SecurityConfigSchema,
+  ...RestConfigSchema,
 };
