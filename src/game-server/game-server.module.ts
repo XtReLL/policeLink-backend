@@ -8,5 +8,6 @@ import { GameServerEntity } from './entities/gameServer.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([GameServerEntity])],
   providers: [GameServerService, GameServerResolver, GameServerRepository],
+  exports: [GameServerRepository],
 })
 export class GameServerModule {}

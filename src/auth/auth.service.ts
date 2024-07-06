@@ -1,9 +1,6 @@
 import { AuthenticationError } from '@nestjs/apollo';
 import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-
-import { Repository } from 'typeorm';
 
 import { compare, genSalt, hash } from 'bcrypt';
 
@@ -14,14 +11,16 @@ import { GameServerEntity } from '@src/game-server/entities/gameServer.entity';
 import { UserRepository } from '@src/user/user.repository';
 import { SignUpLocalDto } from './dto/signUp.dto';
 import { SignInLocalDto } from './dto/signIn.dto';
+import { GameServerRepository } from '@src/game-server/game-server.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(GameServerEntity)
-    private readonly gameServerRepository: Repository<GameServerEntity>,
+    @Inject(GameServerRepository)
+    private readonly gameServerRepository: GameServerRepository,
+    @Inject(UserRepository)
+    private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
-    @Inject(UserRepository) private readonly userRepository: UserRepository,
   ) {}
 
   verifyAndParseJwt(data: string): IClientJwt {

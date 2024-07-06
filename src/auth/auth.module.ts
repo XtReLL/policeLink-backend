@@ -4,6 +4,8 @@ import { AuthResolver } from './auth.resolver';
 import { AuthHelper } from './auth.helper';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@config';
+import { GameServerModule } from '@src/game-server/game-server.module';
+import { UserModule } from '@src/user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { ConfigModule, ConfigService } from '@config';
       },
       inject: [ConfigService],
     }),
+    GameServerModule,
+    UserModule,
   ],
   providers: [AuthService, AuthResolver, AuthHelper],
   exports: [AuthHelper],
